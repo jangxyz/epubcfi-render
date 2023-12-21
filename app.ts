@@ -9,11 +9,13 @@ const data = reactive<{
   cfi: string;
   documents: { name: string; source: string }[];
   result: any;
+  resultText: string | null;
 }>({
   epubUri: "/example/content.opf",
   cfi: "epubcfi(/6/4[chap01ref]!/4[body01]/10[para05]/3:10)",
   documents: [],
   result: null,
+  resultText: null,
 });
 
 let _lastUri: string = location.href;
@@ -51,6 +53,7 @@ async function parseCFI() {
     bookmark
   );
   data.result = bookmark;
+  data.resultText = bookmark.node.textContent;
 }
 
 function addDocument(uri: string, doc: Document | null) {
@@ -96,7 +99,17 @@ const main = html`
       </form>
     </div>
 
-    ${() => documentViews}
+    <div class="results">
+      ${() =>
+        data.resultText
+          ? html`
+              <div>
+                <textarea readonly>${data.resultText ?? ""}</textarea>
+              </div>
+            `
+          : "none"}
+      ${() => documentViews}
+    </div>
   </main>
 `;
 

@@ -8,13 +8,12 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "devDependencies": {
-    "jsdom": "^23.0.1",
-    "tape": "^5.7.2",
-    "vite": "^5.0.8"
-  },
   "dependencies": {
-    "@arrow-js/core": "1.0.0-alpha.9",
+    "@arrow-js/core": "^1.0.0-alpha.9",
     "epub-cfi-resolver": "^1.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8"
   }
 }
