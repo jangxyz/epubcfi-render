@@ -2,47 +2,21 @@ import { html, reactive } from "@arrow-js/core";
 //import CFI from "epub-cfi-resolver";
 import CFI from "./lib/epub-cfi-resolver.js";
 
+import "/style.css";
+
 const data = reactive<{
   epubUri: string;
   cfi: string;
   documents: { name: string; source: string }[];
   result: any;
 }>({
-  epubUri: "http://localhost:5173/tmp/example/content.opf",
+  epubUri: "/example/content.opf",
   cfi: "epubcfi(/6/4[chap01ref]!/4[body01]/10[para05]/3:10)",
   documents: [],
   result: null,
 });
 
-let _lastUri: string | null = null;
-
-//function fetchDocument(uri: string): Promise<Document | null> {
-//  console.log("uri", uri);
-//
-//  return new Promise((resolve, reject) => {
-//    const xhr = new XMLHttpRequest();
-//
-//    xhr.open("GET", uri);
-//    xhr.responseType = "document";
-//
-//    xhr.onload = function () {
-//      if (xhr.readyState === xhr.DONE) {
-//        if (xhr.status < 200 || xhr.status >= 300) {
-//          reject(new Error("Failed to get: " + uri));
-//          return;
-//        }
-//
-//        resolve(xhr.responseXML);
-//      }
-//    };
-//    xhr.onerror = function () {
-//      reject(new Error("Failed to get: " + uri));
-//    };
-//
-//    xhr.send();
-//  });
-//}
-
+let _lastUri: string = location.href;
 function normalizeUri(uri: string) {
   if (_lastUri) {
     try {
@@ -87,20 +61,22 @@ function addDocument(uri: string, doc: Document | null) {
   data.documents.push({ name, source });
 }
 
-async function onSubmit(ev: SubmitEvent) {
-  ev.preventDefault();
-  parseCFI();
-}
-
 const main = html`
   <main>
     <div style="margin: 12px;">
-      <form class="grid" @submit="${onSubmit}">
+      <form
+        class="grid"
+        @submit="${(ev: SubmitEvent) => {
+          ev.preventDefault();
+          parseCFI();
+        }}"
+      >
         <label>EPUB: </label>
         <input
           name="epubcfi"
           type="text"
           style="width: 400px;"
+          placeholder="http://uri.to/content.opf"
           value="${() => data.epubUri}"
           @input="${(e) => (data.epubUri = e.target.value)}"
         />
