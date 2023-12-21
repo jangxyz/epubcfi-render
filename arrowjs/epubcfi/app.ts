@@ -2,9 +2,6 @@ import { html, reactive } from "@arrow-js/core";
 //import CFI from "epub-cfi-resolver";
 import CFI from "./lib/epub-cfi-resolver.js";
 
-import packageDocument from "./content.opf.js";
-import contentDocument from "./chapter01.xml.js";
-
 const data = reactive<{
   epubUri: string;
   cfi: string;
