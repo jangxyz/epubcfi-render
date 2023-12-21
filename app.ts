@@ -11,7 +11,7 @@ const data = reactive<{
   result: any;
   resultText: string | null;
 }>({
-  epubUri: "/example/content.opf",
+  epubUri: "./example/content.opf",
   cfi: "epubcfi(/6/4[chap01ref]!/4[body01]/10[para05]/3:10)",
   documents: [],
   result: null,
